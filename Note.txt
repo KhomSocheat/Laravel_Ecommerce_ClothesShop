@@ -1,0 +1,31 @@
+============Note Step========
+I. Video 1
+    -Setup Layout
+        -Create Middleware for admin
+        -Create Folder for User and Admin and each have file index.blade.php
+        -create route for the user
+        -Create User and Admin Controller and reuturn the file index.blade page to each type of user
+        -Authcenticate user if user is admin redirect to admin.index and if user is user redirect to user.index
+             @guest()
+                <div class="header-tools__item hover-container">
+                    <a href="{{ route('login') }}" class="header-tools__item">
+                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_user" />
+                    </svg>
+                    </a>
+                </div>
+                @else
+                <div class="header-tools__item hover-container">
+                    <a href="{{ Auth::user()->utype === 'ADM' ? route('admin.index') : route('user.index') }}" class="header-tools__item">
+                        <span class="mx-3">{{ Auth::user()->name }}</span>
+                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_user" />
+                    </svg>
+                    </a>
+                </div>
+            @endguest
+        -
+        -Display name when the user login or admin login in the file app.blade.php
+
