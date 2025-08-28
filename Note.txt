@@ -28,4 +28,6 @@ I. Video 1
             @endguest
         -
         -Display name when the user login or admin login in the file app.blade.php
+II. Video2
+    -Change the 
 

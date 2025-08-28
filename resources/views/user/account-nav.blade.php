@@ -8,5 +8,4 @@
                 @csrf
                  <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="menu-link menu-link_us-s">Logout</a></li>
             </form>
-
           </ul>
