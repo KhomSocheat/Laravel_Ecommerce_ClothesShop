@@ -52,7 +52,13 @@
                                                         <td>{{ $brand->id }}</td>
                                                         <td class="pname">
                                                             <div class="image">
-                                                                <img src="{{ asset('storage/' . $brand->image) }}" alt="" class="image">
+                                                                @if($brand->image && file_exists(public_path('uploads/brands/' . $brand->image)))
+                                                                    <img src="{{ asset('uploads/brands/' . $brand->image) }}" alt="{{ $brand->name }}" class="image">
+                                                                @else
+                                                                    <div class="no-image-placeholder">
+                                                                        <i class="icon-image"></i>
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                             <div class="name">
                                                                 <a href="#" class="body-title-2">{{ $brand->name }}</a>
@@ -88,3 +94,26 @@
                             </div>
                         </div>
 @endsection
+
+@push('styles')
+<style>
+    .no-image-placeholder {
+        width: 50px;
+        height: 50px;
+        background-color: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        color: #6c757d;
+        font-size: 20px;
+    }
+    .image img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+</style>
+@endpush

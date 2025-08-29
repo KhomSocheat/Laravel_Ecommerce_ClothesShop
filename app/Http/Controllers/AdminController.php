@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+use Intervention\Image\Laravel\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -17,5 +20,33 @@ class AdminController extends Controller
     }
     public function add_brand(){
         return view('admin.brand_add');
+    }
+    public function brand_store(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:brands,slug',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $brand = new Brand();
+        $brand->name = $request->name;
+        $brand->slug = Str::slug($request->slug);
+        $image = $request->file('image');
+        $file_extension = $request->file('image')->extension();
+        $file_name = Carbon::now()->timestamp.'.'.$file_extension;
+        $this->GenerateBrandThumbilsImage($image,$file_name);
+        $brand->image = $file_name;
+        $brand->save();
+        toastr()->closeButton()->addSuccess('Brand added successfully.');
+        return redirect()->back();
+        // return redirect()->route('admin.brands')->with('success', 'Brand added successfully.');
+    }
+
+    public function GenerateBrandThumbilsImage($image,$imageName){
+
+        $destinationPath = public_path('uploads/brands');
+        $img = Image::read($image->path());
+        $img->cover(124,124,"top");
+        $img->resize(124,124)
+        ->save($destinationPath.'/'.$imageName);
     }
 }
