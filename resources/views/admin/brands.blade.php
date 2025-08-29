@@ -73,8 +73,10 @@
                                                                         <i class="icon-edit-3"></i>
                                                                     </div>
                                                                 </a>
-                                                                <form action="#" method="POST">
-                                                                    <div class="item text-danger delete">
+                                                                <form action="{{ route('admin.brand.delete', $brand->id) }}" method="POST" id="delete-form-{{ $brand->id }}">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <div class="item text-danger delete" onclick="confirmation(event, {{ $brand->id }})">
                                                                         <i class="icon-trash-2"></i>
                                                                     </div>
                                                                 </form>
@@ -116,4 +118,30 @@
         border-radius: 4px;
     }
 </style>
+@endpush
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    // Fixed confirmation function for delete operation
+    function confirmation(ev, brandId){
+        console.log('confirmation called for brand ID:', brandId);
+        ev.preventDefault(); // Prevent default form submission
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this brand!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                // Submit the specific form for this brand
+                document.getElementById('delete-form-' + brandId).submit();
+            }
+        });
+    }
+</script>
 @endpush
