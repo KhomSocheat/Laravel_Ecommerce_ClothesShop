@@ -21,7 +21,7 @@
                                                 </div>
                                             </div>
 
-
+                                            
                                             <div class="wg-chart-default mb-20">
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center gap14">

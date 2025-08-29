@@ -18,10 +18,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('font/fonts.css') }}">
-    <link rel="stylesheet" href="{{ asset('con/style.css') }}i">
+    <link rel="stylesheet" href="{{ asset('icon/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset('images/favicon.ico') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('ss/sweetalert.min.css') }}c">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
     @stack("styles")
 </head>
@@ -39,7 +39,7 @@
                 <div class="section-menu-left">
                     <div class="box-logo">
                         <a href="{{ route('admin.index') }}" id="site-logo-inner">
-                            <img class="" id="logo_header" alt="" src="{{ asset('images/logo/logo.png') }}"
+                            <img class="" id="logo_header_1" alt="" src="{{ asset('images/logo/logo.png') }}"
                                 data-light="{{ asset('images/logo/logo.png') }}" data-dark="{{ asset('images/logo/logo.png') }}">
                         </a>
                         <div class="button-show-hide">
@@ -90,7 +90,7 @@
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
-                                            <a href="brands.html" class="">
+                                            <a href="{{ route('admin.brands') }}" class="">
                                                 <div class="text">Brands</div>
                                             </a>
                                         </li>
@@ -455,7 +455,7 @@
                     </div>
                     <div class="main-content">
                         @yield('content')
-                        <div class="main-content-inner">
+                        {{-- <div class="main-content-inner">
 
                             <div class="main-content-wrap">
                                 <div class="tf-section-2 mb-30">
@@ -705,7 +705,7 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> --}}
 
 
                         <div class="bottom-page">
