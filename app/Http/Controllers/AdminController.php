@@ -36,8 +36,8 @@ class AdminController extends Controller
         $this->GenerateBrandThumbilsImage($image,$file_name);
         $brand->image = $file_name;
         $brand->save();
-        toastr()->closeButton()->addSuccess('Brand added successfully.');
-        return redirect()->back();
+        toastr()->closeButton()->timeOut(5000)->addSuccess('Brand added successfully.');
+        return redirect()->route('admin.brands');
         // return redirect()->route('admin.brands')->with('success', 'Brand added successfully.');
     }
 
@@ -48,5 +48,38 @@ class AdminController extends Controller
         $img->cover(124,124,"top");
         $img->resize(124,124)
         ->save($destinationPath.'/'.$imageName);
+    }
+
+    public function brand_edit($id){
+        $brand = Brand::findOrFail($id);
+        return view('admin.brand_edit', compact('brand'));
+    }
+
+    public function brand_update(Request $request,String $id){
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:brands,slug,'.$id,
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $brand = Brand::findOrFail($id);
+        $brand->name = $request->name;
+        $brand->slug = Str::slug($request->slug);
+        if($request->hasFile('image')){
+            // delete old image
+            $old_image = $brand->image;
+            if($old_image){
+                unlink(public_path('uploads/brands/'.$old_image));
+            }
+            // upload new image
+            $image = $request->file('image');
+            $file_extension = $request->file('image')->extension();
+            $file_name = Carbon::now()->timestamp.'.'.$file_extension;
+            $this->GenerateBrandThumbilsImage($image,$file_name);
+            $brand->image = $file_name;
+        }
+        $brand->save();
+        toastr()->closeButton()->timeOut(5000)->addSuccess('Brand updated successfully.');
+        return redirect()->route('admin.brands');
+        // return redirect()->route('admin.brands')->with('success', 'Brand updated successfully.');
     }
 }
