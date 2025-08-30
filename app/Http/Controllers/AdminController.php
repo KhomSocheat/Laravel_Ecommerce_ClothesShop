@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -91,5 +92,9 @@ class AdminController extends Controller
         $brand->delete();
         toastr()->closeButton()->timeOut(5000)->addSuccess('Brand deleted successfully.');
         return redirect()->route('admin.brands');
+    }
+    public function categories(){
+        $categories = Category::orderBy('id','desc')->paginate(10);
+        return view('admin.categories', compact('categories'));
     }
 }
