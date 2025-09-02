@@ -97,4 +97,36 @@ class AdminController extends Controller
         $categories = Category::orderBy('id','desc')->paginate(10);
         return view('admin.categories', compact('categories'));
     }
+    public function category_add(){
+
+        return view('admin.category_add');
+    }
+
+    public function category_store(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:categories,slug',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $category = new Category();
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->slug);
+        $image = $request->file('image');
+        $file_extension = $request->file('image')->extension();
+        $file_name = Carbon::now()->timestamp.'.'.$file_extension;
+        $this->GenerateCategoryThumbilsImage($image,$file_name);
+        $category->image = $file_name;
+        $category->save();
+        toastr()->closeButton()->timeOut(5000)->addSuccess('Category added successfully.');
+        return redirect()->route('admin.categories');
+    }
+    public function GenerateCategoryThumbilsImage($image,$imageName){
+
+        $destinationPath = public_path('uploads/categories');
+        $img = Image::read($image->path());
+        $img->cover(124,124,"top");
+        $img->resize(124,124)
+        ->save($destinationPath.'/'.$imageName);
+    }
+
 }

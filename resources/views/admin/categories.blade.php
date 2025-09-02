@@ -31,7 +31,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <a class="tf-button style-1 w208" href="#"><i
+                                        <a class="tf-button style-1 w208" href="{{ route('admin.category.add') }}"><i
                                                 class="icon-plus"></i>Add new</a>
                                     </div>
                                     <div class="wg-table table-all-user">
@@ -47,7 +47,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($Categories as $category)
+                                                    @foreach ($categories as $category)
                                                     <tr>
                                                         <td>{{ $category->id }}</td>
                                                         <td class="pname">
@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="divider"></div>
                                         <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
-                                            {{ $category->links('pagination::bootstrap-5') }}
+                                            {{ $categories->links('pagination::bootstrap-5') }}
                                         </div>
                                     </div>
                                 </div>
