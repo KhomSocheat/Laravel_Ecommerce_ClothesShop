@@ -27,7 +27,10 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
     Route::delete('/admin/brands/delete/{id}',[AdminController::class, 'brand_delete'])->name('admin.brand.delete');
 
 
-    Route::get('/admin/categories',[AdminController::class, 'categories'])->name('admin.categories');
-    Route::get('/admin/categories/add',[AdminController::class, 'category_add'])->name('admin.category.add');
-    Route::post('/admin/categories/store',[AdminController::class, 'category_store'])->name('admin.category.store');
+    Route::get('/admin/categories',[AdminController::class, 'categories'])->name('admin.categories'); //show the list of categories
+    Route::get('/admin/categories/add',[AdminController::class, 'category_add'])->name('admin.category.add'); //show the form to add a new category
+    Route::post('/admin/categories/store',[AdminController::class, 'category_store'])->name('admin.category.store'); //store the new category
+    Route::get('/admin/categories/edit/{id}',[AdminController::class, 'category_edit'])->name('admin.category.edit'); //show the form to edit a category
+    Route::post('/admin/categories/update/{id}',[AdminController::class, 'category_update'])->name('admin.category.update'); //update the category
+    Route::delete('/admin/categories/delete/{id}',[AdminController::class, 'category_delete'])->name('admin.category.delete'); //delete the category
 });

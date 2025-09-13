@@ -68,18 +68,18 @@
                                                         <td><a href="#" target="_blank">0</a></td>
                                                         <td>
                                                             <div class="list-icon-function">
-                                                                <a href="#">
+                                                                <a href="{{ route('admin.category.edit', $category->id) }}">
                                                                     <div class="item edit">
                                                                         <i class="icon-edit-3"></i>
                                                                     </div>
                                                                 </a>
-                                                                {{-- <form action="{{ route('admin.brand.delete', $brand->id) }}" method="POST" id="delete-form-{{ $brand->id }}">
+                                                                <form action="{{ route('admin.category.delete', $category->id) }}" method="POST" id="delete-form-{{ $category->id }}">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <div class="item text-danger delete" onclick="confirmation(event, {{ $brand->id }})">
+                                                                    <div class="item text-danger delete" onclick="confirmation(event, {{ $category->id }})">
                                                                         <i class="icon-trash-2"></i>
                                                                     </div>
-                                                                </form> --}}
+                                                                </form>
                                                             </div>
                                                         </td>
                                                     </tr>

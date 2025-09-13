@@ -128,5 +128,48 @@ class AdminController extends Controller
         $img->resize(124,124)
         ->save($destinationPath.'/'.$imageName);
     }
+    public function category_edit(String $id){
+        $category = Category::findOrFail($id);
+        return view('admin.category_edit', compact('category'));
+    }
+    public function category_update(Request $request,String $id){
+       $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:brands,slug,'.$id,
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->slug);
+        if($request->hasFile('image')){
+            // delete old image
+            $old_image = $category->image;
+            if($old_image){
+                unlink(public_path('uploads/categories/'.$old_image));
+            }
+            // upload new image
+            $image = $request->file('image');
+            $file_extension = $request->file('image')->extension();
+            $file_name = Carbon::now()->timestamp.'.'.$file_extension;
+            $this->GenerateCategoryThumbilsImage($image,$file_name);
+            $category->image = $file_name;
+        }
+        $category->save();
+        toastr()->closeButton()->timeOut(5000)->addSuccess('Category updated successfully.');
+        return redirect()->route('admin.categories');
+
+
+    }
+    public function category_delete(Request $request,String $id){
+        $category = Category::findOrFail($id);
+        $old_image = $category->image;
+        if($old_image){
+            unlink(public_path('uploads/categories/'.$old_image));
+        }
+        $category->delete();
+        toastr()->closeButton()->timeOut(5000)->addSuccess('Category deleted successfully.');
+        return redirect()->route('admin.categories');
+    }
+
 
 }
